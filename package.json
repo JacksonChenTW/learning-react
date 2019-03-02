@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development --host 0.0.0.0 --port 3000",
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development --host 0.0.0.0 --port 4201",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
@@ -19,7 +19,10 @@
     "webpack-dev-server": "^3.2.1"
   },
   "devDependencies": {
+    "@types/react": "^16.8.6",
+    "@types/react-dom": "^16.8.2",
     "babel-loader": "^7.1.5",
+    "eslint": "^5.15.0",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   }

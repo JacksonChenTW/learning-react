@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:3000',
+    'webpack-dev-server/client?http://0.0.0.0:4201',
     './src/index.jsx'
   ],
   output: {
