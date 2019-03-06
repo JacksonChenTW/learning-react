@@ -5,25 +5,34 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOn: false
+      form_value: {
+        name: 'sdfasdf',
+        description: 'asdf',
+      }
     };
-    // this.handleClick = this.handleClick.bind(this);
   }
-  handleClick() {
-    this.setState(
-      state => ({
-        isOn: !state.isOn
-      })
-    );
+
+  handleChange(event) {
+    const name = event.target.name
+    this.setState({ form_value: { [name]: event.target.value } });
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.form_value.name);
+    event.preventDefault();
   }
 
   render() {
     return (
-      <div>
-        <button onClick={(e) => this.handleClick(e)}>
-          {this.state.isOn ? 'ON' : 'OFF'}
-        </button>
-      </div>
+      <form onSubmit={(e) => this.handleSubmit(e)}>
+        <div>
+          Name:<input type="text" name="name" value={this.state.form_value.name} onChange={(e) => this.handleChange(e)}></input>
+        </div>
+        <div>
+          <textarea name="description" value={this.state.form_value.description || ''} onChange={(e) => this.handleChange(e)}></textarea>
+        </div>
+        <input type="submit" value="Submit"></input>
+      </form>
     );
   }
 }
