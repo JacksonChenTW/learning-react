@@ -5,19 +5,19 @@ const path = require('path');
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:4201',
+    'webpack-dev-server/client?http://0.0.0.0:9000',
     './src/index.jsx'
   ],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './dist'),
   },
-  module:{
+  module: {
     rules: [
-      { test: /\.(js|jsx)$/, use: 'babel-loader'}
+      { test: /\.(js|jsx)$/, use: 'babel-loader' }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({template: './src/index.html'})
+    new HtmlWebpackPlugin({ template: './src/index.html' })
   ]
 };

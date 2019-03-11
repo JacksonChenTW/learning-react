@@ -1,38 +1,92 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class App extends React.Component {
+const scaleNames = {
+  c: 'Celsius',
+  f: 'Fahrenheit'
+};
+
+function BiolingVerdict(props) {
+  if (props.celsius >= 100) {
+    return <p>Bild</p>;
+  }
+  return <p>Cold</p>
+}
+
+function toCelsius(f) {
+  return (f - 32) * 5 / 9;
+}
+function toFahrenheit(c) {
+  return (c * 9 / 5) + 32;
+}
+
+function tryConvert(temperature, convert) {
+  const input = parseFloat(temperature);
+  if (Number.isNaN(input)) {
+    return '';
+  }
+  const output = convert(input);
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
+}
+
+class TemperatureInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: 'sdfasdf',
-      description: 'asdf',
-    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    const name = event.target.name;
-    console.log(name, event.target.value);
-    this.setState({ [name]: event.target.value });
-  }
-
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.name);
-    event.preventDefault();
+  handleChange(e) {
+    this.props.onTemperatureChange(e.target.value);
   }
 
   render() {
+    const temperature = this.props.temperature;
+    const scale = this.props.scale;
+
     return (
-      <form onSubmit={(e) => this.handleSubmit(e)}>
-        <div>
-          Name:<input type="text" name="name" value={this.state.name} onChange={(e) => this.handleChange(e)}></input>
-        </div>
-        <div>
-          <textarea name="description" value={this.state.description || ''} onChange={(e) => this.handleChange(e)}></textarea>
-        </div>
-        <input type="submit" value="Submit"></input>
-      </form>
+      <fieldset>
+        <legend>Enter temperature in {scaleNames[scale]}:</legend>
+        <input value={temperature}
+          onChange={this.handleChange}
+        ></input>
+      </fieldset>
+    )
+  }
+}
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handelCelsiusChange = this.handelCelsiusChange.bind(this);
+    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+    this.state = {
+      temperature: '',
+      scale: 'c',
+    };
+  }
+
+  handelCelsiusChange(temperature) {
+    this.setState({ scale: 'c', temperature });
+  }
+  handleFahrenheitChange(temperature) {
+    this.setState({ scale: 'f', temperature });
+  }
+
+  render() {
+    const scale = this.state.scale;
+    const temperature = this.state.temperature;
+    const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+
+
+    return (
+      <div>
+        <TemperatureInput scale="c" temperature={celsius} onTemperatureChange={this.handelCelsiusChange} />
+        <TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange} />
+        <BiolingVerdict celsius={parseFloat(celsius)} />
+      </div>
     );
   }
 }
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Calculator />, document.getElementById('app'));

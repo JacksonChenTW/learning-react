@@ -15,3 +15,10 @@ State: {
 在HTML標籤裡面放這個 `value={this.state.name} `只是設定他的defualt，不能改變值
 
 改值需要靠 `onChange={(e) => this.handleChange(e)}`
+
+
+
+```
+  "@types/react": "^16.8.6",
+  "@types/react-dom": "^16.8.2",
+```
